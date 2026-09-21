@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Question Error Book</title>
+<title>Error Book App</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
@@ -11,10 +11,41 @@ body{
   background-color:#0a0a0a;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%234ade80' stroke-opacity='0.16' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 20c0-5 5-10 10-10s10 5 10 10-5 10-10 10-10-5-10-10z'/></g></svg>");
   background-size:220px 220px;background-repeat:repeat;background-attachment:fixed;color:#e2e8f0;
-  padding:8px;padding-top:52px;font-size:13px;overflow-x:hidden;min-height:100vh;
+  padding:8px;padding-top:82px;font-size:13px;overflow-x:hidden;min-height:100vh;
 }
-.topstrip{position:fixed;top:0;left:0;right:0;background:rgba(15,23,42,0.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #334155;z-index:200;padding:6px;display:flex;gap:3px;align-items:center}
-.topstrip button{flex:1;padding:0 3px;height:38px;font-size:10px;font-weight:700;border-radius:8px;border:none;display:inline-flex;align-items:center;justify-content:center;gap:3px;color:#94a3b8;background:rgba(30,41,59,0.85);cursor:pointer;white-space:nowrap;overflow:hidden}
+
+/* === TOP STRIP — ERROR BOOK APP + DARK BOLD BORDER === */
+.topstrip{
+  position:fixed;top:0;left:0;right:0;
+  background:rgba(15,23,42,0.96);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:3px solid #0a0a0a;   /* dark bold border */
+  box-shadow:0 4px 0 #000, 0 6px 18px rgba(0,0,0,0.8);
+  z-index:200;
+  display:flex;flex-direction:column;
+  padding:4px 6px 6px;
+  margin:6px 6px 0;                   /* margin so border visible around */
+  border-radius:10px 10px 0 0;
+}
+.app-title{
+  text-align:center;
+  font-size:15px;font-weight:900;letter-spacing:2px;
+  color:#fbbf24;
+  text-shadow:0 0 6px rgba(251,191,36,0.5), 0 1px 0 #000;
+  padding:4px 0 2px;
+  border-bottom:2px solid #1e293b;
+  margin-bottom:4px;
+}
+.topstrip-row{
+  display:flex;gap:3px;align-items:center;
+  padding:2px 0 0;
+}
+.topstrip button{
+  flex:1;padding:0 3px;height:34px;font-size:10px;font-weight:700;
+  border-radius:8px;border:none;display:inline-flex;align-items:center;
+  justify-content:center;gap:3px;color:#94a3b8;
+  background:rgba(30,41,59,0.85);cursor:pointer;white-space:nowrap;overflow:hidden;
+}
 .topstrip button i{font-size:12px}
 .topstrip button.active{color:#fff}
 .topstrip button[data-tab="all"].active{background:#0ea5e9}
@@ -200,7 +231,7 @@ body{
 .reminder .msg b{color:#fbbf24}
 .reminder button{width:30px;height:30px;padding:0;font-size:12px;border-radius:7px;background:#f59e0b;color:#000;border:none;cursor:pointer}
 
-.folder-detail{position:fixed;inset:0;background:#0a0a0a;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%234ade80' stroke-opacity='0.16' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 20c0-5 5-10 10-10s10 5 10 10-5 10-10 10-10-5-10-10z'/></g></svg>");background-size:220px 220px;background-attachment:fixed;z-index:500;display:none;flex-direction:column;padding:8px;overflow-y:auto}
+.folder-detail{position:fixed;inset:0;background:#0a0a0a;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%234ade80' stroke-opacity='0.16' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 20c0-5 5-10 10-10s10 5 10 10-5 10-10 10-10-5-10-10z'/></g></svg>");background-size:220px 220px;background-attachment:fixed;z-index:500;display:none;flex-direction:column;padding:8px;padding-top:52px;overflow-y:auto}
 .folder-detail.show{display:flex}
 .fd-header{position:sticky;top:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(14px);padding:8px;border-radius:10px;display:flex;align-items:center;gap:8px;margin-bottom:8px;z-index:10;border:1px solid rgba(71,85,105,0.7)}
 .fd-back{width:36px;height:36px;padding:0;font-size:15px;border-radius:9px;background:#475569;color:#fff;border:none;cursor:pointer}
@@ -286,10 +317,13 @@ body{
 <body class="app-loading">
 
 <div class="topstrip">
-  <button data-tab="all" class="active" onclick="showTab('all')"><i class="fa-solid fa-sun"></i> TODAY</button>
-  <button data-tab="weekly" onclick="showTab('weekly')"><i class="fa-solid fa-calendar-week"></i> WEEKLY</button>
-  <button data-tab="monthly" onclick="showTab('monthly')"><i class="fa-solid fa-calendar-days"></i> MONTHLY</button>
-  <button data-tab="settings" onclick="showTab('settings')"><i class="fa-solid fa-gear"></i></button>
+  <div class="app-title">ERROR BOOK APP</div>
+  <div class="topstrip-row">
+    <button data-tab="all" class="active" onclick="showTab('all')"><i class="fa-solid fa-sun"></i> TODAY</button>
+    <button data-tab="weekly" onclick="showTab('weekly')"><i class="fa-solid fa-calendar-week"></i> WEEKLY</button>
+    <button data-tab="monthly" onclick="showTab('monthly')"><i class="fa-solid fa-calendar-days"></i> MONTHLY</button>
+    <button data-tab="settings" onclick="showTab('settings')"><i class="fa-solid fa-gear"></i></button>
+  </div>
 </div>
 
 <div id="reminder" class="reminder hidden">
@@ -736,10 +770,7 @@ function handleGalleryInput(e){
 }
 document.getElementById('inputGallery').addEventListener('change', handleGalleryInput);
 
-/* 8) CROP
-   Photo hamesha center mein, aspect ratio kabhi na badle, upscale na ho.
-   Sirf tab downscale ho jab image orange lines ke area se badi ho.
-*/
+/* 8) CROP — image center, ratio preserved, no upscale */
 function initCrop(){
   cropBoxRotation = 0;
   cropImgRotation = 0;
@@ -885,7 +916,7 @@ function stopMove(){
   resizing = false;
 }
 
-/* BIG ROUND ROTATE BUTTON — IMAGE ko 90° CLOCKWISE ghumata hai */
+/* BIG ROUND ROTATE BUTTON — IMAGE 90° CLOCKWISE */
 function rotateCropBox90(){
   cropImgRotation = (cropImgRotation + 90) % 360;
 
@@ -896,8 +927,7 @@ function rotateCropBox90(){
   setTimeout(fitImageAfterRotation, 360);
 }
 
-/* Rotation ke baad image ko center rakho, ratio same rakho, upscale mat karo.
-   Sirf tab downscale karo jab area se badi ho. */
+/* Rotation ke baad image center, ratio same, no upscale */
 function fitImageAfterRotation(){
   const img = document.getElementById('cropImg');
   const area = document.getElementById('cropInner');
@@ -1617,5 +1647,3 @@ setInterval(()=>{ autoArchive(); updateReminder(); }, 60000);
 </script>
 </body>
 </html>
-
-
