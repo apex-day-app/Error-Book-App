@@ -113,7 +113,7 @@ body{
   gap:8px;overflow:hidden;min-height:154px;height:154px;box-sizing:border-box;
 }
 .upbox.filled{border-style:solid;border-color:#0ea5e9;padding:0;min-height:154px;height:154px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.upbox img{width:100%;height:100%;display:block;border-radius:10px;object-fit:cover;background:#000;cursor:zoom-in}
+.upbox img{width:100%;height:100%;display:block;border-radius:10px;object-fit:contain;background:#000;cursor:zoom-in}
 .upbox .edit-ov{position:absolute;top:6px;right:6px;z-index:3}
 .upbox .edit-ov button{width:28px;height:28px;padding:0;font-size:12px;border-radius:8px;background:rgba(220,38,38,0.92);color:#fff;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 .upbox .box-lbl{font-size:10px;color:#cbd5e1;font-weight:800;letter-spacing:.5px;display:inline-flex;align-items:center;gap:5px;height:14px;line-height:14px}
@@ -142,7 +142,7 @@ body{
   touch-action:pan-y;overflow:hidden;
 }
 .mistake:last-child{border-bottom:1.5px solid #0f172a}
-.mistake img.preview{width:100%;border-radius:8px;margin-top:5px;height:180px;min-height:180px;max-height:180px;object-fit:cover;background:#000;cursor:zoom-in;pointer-events:auto}
+.mistake img.preview{width:100%;border-radius:8px;margin-top:5px;height:180px;min-height:180px;max-height:180px;object-fit:contain;background:#000;cursor:zoom-in;pointer-events:auto}
 .mistake img.preview:first-child{margin-top:0}
 .mistake .fire-overlay,.folder .fire-overlay{position:absolute;inset:0;border-radius:10px;pointer-events:none;opacity:0;transition:opacity .08s;z-index:5;background:radial-gradient(circle at center,rgba(220,38,38,0.85) 0%,rgba(153,27,27,0.6) 40%,rgba(80,10,10,0.3) 70%,transparent 100%);box-shadow:inset 0 0 30px rgba(239,68,68,0.9),inset 0 0 60px rgba(220,38,38,0.5),0 0 40px rgba(239,68,68,0.7)}
 .mistake.swiping,.folder.swiping{z-index:10}
@@ -157,13 +157,17 @@ body{
 .ans-wrap{display:none;margin-top:6px}
 .ans-wrap.show{display:block}
 
-/* ===== DATE SEPARATOR (WhatsApp style) ===== */
+/* ===== DATE SEPARATOR (WhatsApp style sticky) ===== */
 .date-sep{
   display:flex;
   justify-content:center;
   align-items:center;
   margin:14px 0 10px 0;
   padding:0 8px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  pointer-events:none;
 }
 .date-sep:first-child{margin-top:0;}
 .date-sep span{
@@ -177,6 +181,7 @@ body{
   border-radius:20px;
   border:1px solid #334155;
   box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  pointer-events:auto;
 }
 .date-sep.today span{
   background:linear-gradient(135deg,#0ea5e9,#0284c7);
@@ -453,9 +458,10 @@ body{
 }
 .bp-hint{font-size:11px;color:#94a3b8;text-align:center;margin-top:16px;line-height:1.6;padding:0 12px}
 
+/* ===== CROP ===== */
 .crop-c{position:fixed;inset:0;background:#000;z-index:2000;display:flex;flex-direction:column;padding:8px}
-.crop-area{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#111;border-radius:8px;touch-action:none;border-top:2px solid #fbbf24;border-bottom:2px solid #fbbf24}
-.crop-inner{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.crop-area{flex:1;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#111;border-radius:8px;touch-action:none;padding:0}
+.crop-inner{position:absolute;left:8px;right:8px;top:8px;bottom:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-top:2px solid #fbbf24;border-bottom:2px solid #fbbf24;border-radius:4px}
 .crop-area img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;pointer-events:none;transform-origin:center center;position:relative;z-index:1;display:block}
 .crop-ov{position:absolute;border:2px dashed #0ea5e9;background:rgba(14,165,233,.15);box-shadow:0 0 0 9999px rgba(0,0,0,.55);touch-action:none;transform-origin:center center;z-index:2}
 .crop-h{position:absolute;width:22px;height:22px;background:#0ea5e9;border:2px solid #fff;border-radius:50%;cursor:pointer;z-index:6;touch-action:none;box-shadow:0 0 10px rgba(14,165,233,0.9)}
@@ -478,16 +484,18 @@ body{
 .toast.show{opacity:1}
 .toast.err{background:rgba(220,38,38,0.98)}
 
+/* ===== FULLSCREEN VIEWER ===== */
 .fs-viewer{position:fixed;inset:0;background:#000;z-index:3000;display:none;flex-direction:column}
 .fs-viewer.show{display:flex}
 .fs-top{position:absolute;top:0;left:0;right:0;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;z-index:10;background:linear-gradient(180deg,rgba(0,0,0,0.75),transparent);pointer-events:none}
 .fs-top > *{pointer-events:auto}
 .fs-counter{color:#fff;font-size:12px;font-weight:700;background:rgba(0,0,0,0.6);padding:4px 10px;border-radius:20px}
 .fs-close{width:36px;height:36px;padding:0;font-size:16px;border-radius:50%;background:rgba(30,41,59,0.9);border:none;color:#fff;cursor:pointer}
-.fs-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;padding-top:8px;padding-bottom:8px;border-top:2px solid #fbbf24;border-bottom:2px solid #fbbf24;box-sizing:border-box}
+.fs-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;padding:8px;box-sizing:border-box}
+.fs-stage::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;border-top:2px solid #fbbf24;border-bottom:2px solid #fbbf24;border-radius:4px;pointer-events:none;z-index:2}
 .fs-img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;user-select:none;transform-origin:center center;display:block}
 .fs-label{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);color:#e2e8f0;font-size:11px;font-weight:700;background:rgba(15,23,42,0.9);padding:6px 14px;border-radius:20px;white-space:nowrap;z-index:15}
-.fs-qnum{position:absolute;top:12px;left:50%;transform:translateX(-50%);color:#fff;font-size:12px;font-weight:800;background:rgba(15,23,42,0.9);padding:5px 14px;border-radius:20px;z-index:15;border:1px solid #334155}
+.fs-qnum{position:absolute;top:12px;left:14px;transform:none;color:#fff;font-size:12px;font-weight:800;background:rgba(15,23,42,0.9);padding:5px 14px;border-radius:20px;z-index:15;border:1px solid #334155}
 .fs-next-btn{position:absolute;bottom:22px;right:18px;height:44px;padding:0 18px;background:#0ea5e9;color:#fff;border:none;border-radius:22px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;z-index:20}
 #fsDoneBtn{background:linear-gradient(135deg,#0a0a0a,#1a2a3a);color:#fbbf24;border:2px solid #fbbf24;font-weight:900;box-shadow:0 0 12px rgba(251,191,36,0.6),inset 0 0 12px rgba(251,191,36,0.15)}
 .fs-preview-btn{position:absolute;bottom:22px;left:18px;height:44px;padding:0 16px;background:#16a34a;color:#fff;border:none;border-radius:22px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;z-index:20}
@@ -813,7 +821,6 @@ function buildDateGroups(items){
     if(!map[k]){ map[k] = { key: k, items: [] }; groups.push(map[k]); }
     map[k].items.push(it);
   });
-  // groups already in newest-first order because sorted is newest first
   return groups;
 }
 
@@ -1451,9 +1458,12 @@ function saveMistake(){
   store.store.unshift(newItem);
   saveStore(); clearForm(); toast('Saved'); renderAll();
 }
+
+/* ===== FIXED mistakeCard — unique UID per render ===== */
+let cardRenderCounter = 0;
 function mistakeCard(m, allList, indexInList){
   const hasAns = m.myImage || m.cImage;
-  const uid = 'ans-' + String(m.id).replace(/[^a-z0-9]/gi,'');
+  const uid = 'ans-' + (++cardRenderCounter);
   const listKey = (allList || 'all') + '|' + (indexInList != null ? indexInList : '');
   const qnum = (indexInList != null) ? (indexInList + 1) : '?';
   return `
@@ -1702,7 +1712,7 @@ function openStore(){
 function closeStore(){ document.getElementById('storeView').classList.add('hidden'); updateStoreCount(); }
 function updateStoreCount(){ const c = (store.store||[]).length; const el = document.getElementById('storeCount'); if(el) el.textContent = c + ' question' + (c===1?'':'s') + ' stored'; }
 
-/* ===== RENDER STORE WITH DATE GROUPS (WhatsApp style) ===== */
+/* ===== RENDER STORE WITH DATE GROUPS (WhatsApp style sticky) ===== */
 function renderStore(){
   const el = document.getElementById('storeList');
   const list = getSortedList(store.store || []);
@@ -1711,13 +1721,12 @@ function renderStore(){
 
   const groups = buildDateGroups(list);
   let html = '';
-  let runningIndex = 0; // used for Q numbering inside mistakeCard
+  let runningIndex = 0;
 
   groups.forEach((g, gi) => {
     const label = dateLabelFromKey(g.key);
     const cls = dateKeyForLabel(g.key);
     html += `<div class="date-sep ${cls}"><span>${label}</span></div>`;
-    // Items are already newest first inside group
     g.items.forEach((m) => {
       html += mistakeCard(m, 'store', runningIndex);
       runningIndex++;
