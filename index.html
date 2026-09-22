@@ -1102,6 +1102,8 @@ function fsApplyTransform(animate){
 function fsShowCurrent(){
   const q=fsQuestions[fsQIndex];const item=q.images[fsIndex];const img=document.getElementById('fsImg');
   fsResetZoom();img.src=item.url;
+  img.onload=function(){fsFitImage();};
+  if(img.complete){fsFitImage();}
   document.getElementById('fsCounter').textContent=(fsIndex+1)+' / '+q.images.length;
   document.getElementById('fsLabel').textContent=item.label;
   document.getElementById('fsQNum').textContent='Q'+q.qnum;
@@ -1111,6 +1113,26 @@ function fsShowCurrent(){
   const nextBtn=document.getElementById('fsNextBtn'),doneBtn=document.getElementById('fsDoneBtn');
   if(fsQIndex>=fsQuestions.length-1){nextBtn.style.display='none';doneBtn.style.display='inline-flex';}
   else{nextBtn.style.display='inline-flex';doneBtn.style.display='none';}
+}
+function fsFitImage(){
+  const img=document.getElementById('fsImg');
+  if(!img||!img.naturalWidth||!img.naturalHeight)return;
+  const stage=document.getElementById('fsStage');
+  const stageRect=stage.getBoundingClientRect();
+  const stageW=stageRect.width;
+  const stageH=stageRect.height*0.60;
+  const natW=img.naturalWidth;
+  const natH=img.naturalHeight;
+  const scaleW=stageW/natW;
+  const scaleH=stageH/natH;
+  const scale=Math.min(scaleW,scaleH);
+  const finalW=natW*scale;
+  const finalH=natH*scale;
+  img.style.width=finalW+'px';
+  img.style.height=finalH+'px';
+  img.style.maxWidth='none';
+  img.style.maxHeight='none';
+  img.style.objectFit='fill';
 }
 function closeFs(){document.getElementById('fsViewer').classList.remove('show');document.getElementById('fsImg').src='';fsResetZoom();}
 function fsPrevQuestion(){if(fsQIndex>0){fsQIndex--;fsIndex=0;fsResetZoom();fsShowCurrent();}}
@@ -1191,6 +1213,13 @@ function fsTouchDist(t1,t2){const dx=t1.clientX-t2.clientX,dy=t1.clientY-t2.clie
     if(e.key==='ArrowRight')fsNextQuestion();
   });
 })();
+
+window.addEventListener('resize',function(){
+  if(document.getElementById('fsViewer').classList.contains('show')){fsFitImage();}
+});
+window.addEventListener('orientationchange',function(){
+  if(document.getElementById('fsViewer').classList.contains('show')){setTimeout(fsFitImage,300);}
+});
 
 function renderAll(){
   const el=document.getElementById('allList');
